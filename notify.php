@@ -4,7 +4,7 @@
     link proposed by the link resolver does not work.
   */
   
-  require_once 'includes/defaults.inc';
+  require_once 'includes/defaults.inc.php';
   
   if (php_sapi_name() != 'cli') { // Don't continue unless this has been run from the command line.
     exit();
@@ -15,7 +15,7 @@
   ]);
   
   if ($options) {
-    require_once "includes/Mailer.class.inc";
+    require_once "includes/Mailer.class.php";
     
     $mailer = new Mailer;
     $mailer->setFromName('Goshen College Library');

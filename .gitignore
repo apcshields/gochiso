@@ -3,4 +3,4 @@ Thumbs.db
 composer.lock
 vendor
 ._*
-includes/config.inc
+includes/config.*

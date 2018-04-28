@@ -1,7 +1,7 @@
 <?php
 
 /*
-	Mailer.class.inc
+	Mailer.class.php
 	send email messages from the application
 	mostly just a wrapper for PHP's mail function
 */

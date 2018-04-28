@@ -1,5 +1,5 @@
 <?php
-  require_once 'includes/defaults.inc';
+  require_once 'includes/defaults.inc.php';
 
   use GuzzleHttp\Client;
 
@@ -14,7 +14,7 @@
       'timeout' => 2.0
     ]);
 
-    include_once "includes/contextobject.inc";
+    include_once "includes/contextobject.inc.php";
 
     $ctx_obj = new ContextObject();
 

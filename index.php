@@ -1,5 +1,5 @@
 <?php 
-  require_once 'includes/defaults.inc';
+  require_once 'includes/defaults.inc.php';
   
   // Set up configuration.
   // Google Scholar
@@ -24,7 +24,7 @@
   $response['match'] = null;
   
   try {
-    include_once 'includes/contextobject.inc';
+    include_once 'includes/contextobject.inc.php';
     
     $ctx_obj = new ContextObject();
     

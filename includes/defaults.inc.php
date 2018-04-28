@@ -4,7 +4,7 @@
   ini_set('display_errors', false); //!
 
   // Our configuration file.
-  require_once 'config.inc';
+  require_once 'config.inc.php';
 
   // Composer
   require __DIR__ . '/../vendor/autoload.php';

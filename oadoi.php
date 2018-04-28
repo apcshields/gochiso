@@ -1,5 +1,5 @@
 <?php
-  require_once 'includes/defaults.inc';
+  require_once 'includes/defaults.inc.php';
 
   use GuzzleHttp\Client;
   // use GuzzleHttp\Psr7\Request; //d
@@ -18,7 +18,7 @@
   $response = [];
   
   try {
-    include_once 'includes/contextobject.inc';
+    include_once 'includes/contextobject.inc.php';
     
     $ctx_obj = new ContextObject();
     
