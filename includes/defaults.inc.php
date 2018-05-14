@@ -8,3 +8,8 @@
 
   // Composer
   require __DIR__ . '/../vendor/autoload.php';
+
+  if (in_array($_SERVER['HTTP_ORIGIN'], ALLOWED_DOMAINS)) {
+    header('Access-Control-Allow-Origin: ' . $_SERVER['HTTP_ORIGIN'], true);
+    header('Vary: Origin', true);
+  }
