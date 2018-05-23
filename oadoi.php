@@ -62,40 +62,41 @@
 
     // Query oaDOI.
     $oadoiClient = new Client([
-      'base_uri' => 'https://api.oadoi.org/',
+      'base_uri' => 'https://api.unpaywall.org/v2/',
       'timeout' => 5.0
     ]);
 
-    $oadoiResponse = $oadoiClient->get($resultDOI);
+    $oadoiResponse = $oadoiClient->get($resultDOI, [
+      'query' => [
+        'email' => UNPAYWALL_EMAIL
+      ]
+    ]);
 
     $oadoiData = json_decode(utf8_encode($oadoiResponse->getBody()), true);
 
-    if (!count($oadoiData['results'])) throw new BadOadoiResponse('No results.');
+    if (!count($oadoiData['oa_locations'])) throw new BadOadoiResponse('No results.');
 
     $match = [];
 
-    for ($counter = 0, $length = count($oadoiData['results']); $counter < $length; $counter++) {
-      if (isset($oadoiData['results'][$counter]['free_fulltext_url'])) {
-        if (isset($oadoiData['results'][$counter]['_title'])) $match['title'] = $oadoiData['results'][$counter]['_title'];
-        if (count($resultItem['container-title'])) $match['container'] = $resultItem['container-title'][0];
-        if (isset($resultItem['issued']) && isset($resultItem['issued']['date-parts']) && count($resultItem['issued']['date-parts']) && count($resultItem['issued']['date-parts'][0])) $match['date'] = $resultItem['issued']['date-parts'][0][0];
-        if (isset($resultItem['volume'])) $match['volume'] = $resultItem['volume'];
-        if (isset($resultItem['issue'])) $match['issue'] = $resultItem['issue'];
-        if (isset($resultItem['author']) && count($resultItem['author']) && isset($resultItem['author'][0]['family'])) $match['aulast'] = $resultItem['author'][0]['family'];
+    // Just use the best match Unpaywall returns.
+    if (isset($oadoiData['best_oa_location']['url'])) {
+      if (isset($oadoiData['title'])) $match['title'] = $oadoiData['title'];
+      if (count($resultItem['container-title'])) $match['container'] = $resultItem['container-title'][0]; // $oadoiData['journal_name']
+      if (isset($resultItem['issued']) && isset($resultItem['issued']['date-parts']) && count($resultItem['issued']['date-parts']) && count($resultItem['issued']['date-parts'][0])) $match['date'] = $resultItem['issued']['date-parts'][0][0]; // $oadoiData['published_date']
+      if (isset($resultItem['volume'])) $match['volume'] = $resultItem['volume'];
+      if (isset($resultItem['issue'])) $match['issue'] = $resultItem['issue'];
+      if (isset($resultItem['author']) && count($resultItem['author']) && isset($resultItem['author'][0]['family'])) $match['aulast'] = $resultItem['author'][0]['family']; // $oadoiData will also have a list of authors.
 
-        $match['authors'] = (isset($resultItem['author'])) ? humanizeCrossrefAuthors($resultItem['author']) : '';
+      $match['authors'] = (isset($resultItem['author'])) ? humanizeCrossrefAuthors($resultItem['author']) : '';
 
-        $match['abstract'] = '';
+      $match['abstract'] = '';
 
-        $match['fulltext'] = [];
-
-        $match['fulltext'][] = [
-          'link' => $oadoiData['results'][$counter]['free_fulltext_url'],
-          'label' => 'Full text'
-        ];
-
-        break;
-      }
+      $match['fulltext'] = [
+        [
+          'link' => $oadoiData['best_oa_location']['url'],
+          'label' => 'Full text online'
+        ]
+      ];
     }
 
     $response['match'] = $match;
