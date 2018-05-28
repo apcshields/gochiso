@@ -76,21 +76,28 @@ jQuery(function($) {
   if (queryString) {
     $.when(
       $.getJSON(baseURL + 'discovery.php?' + queryString),
-      $.getJSON(baseURL + 'oadoi.php?' + queryString)
+      $.getJSON(baseURL + 'oadoi.php?' + queryString),
+      $.getJSON(baseURL + 'openaccessbutton.php?' + queryString)
     )
-    .done(function(discoveryData, oadoiData) {
+    .done(function(discoveryData, oadoiData, oabuttonData) {
       // If one of these fails, this doesn't run... so then what? //!
 
-      var discoveryData = discoveryData[0];
-      var oadoiData = oadoiData[0];
+      discoveryData = discoveryData[0];
+      oadoiData = oadoiData[0];
+      oabuttonData = oabuttonData[0];
 
       // This would be the appropriate time to handle errors.
 
       var results = [];
 
       // Appending these in this order prefers data from oaDOI. I think I prefer the oadoiData because most of it comes from CrossRef.
+      // Note: the order in which these are appended also affects the order of full-text link display, which is why OpenAccessButton isn't first.
       if (discoveryData.match != null) {
         results.push(discoveryData.match);
+      }
+
+      if (oabuttonData.match != null) {
+        results.push(oabuttonData.match);
       }
 
       if (oadoiData.match != null) {
@@ -98,7 +105,7 @@ jQuery(function($) {
       }
 
       // Crude merging of the data...
-      var fulltext = _.flatMap(results, 'fulltext');
+      var fulltext = _(results).flatMap('fulltext').uniqBy('url').value();
 
       var data = { match: {} };
 
