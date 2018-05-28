@@ -30,7 +30,7 @@
 
     $query = [];
 
-    $query['query.title'] = ($_1 = $ctx_obj->getBookTitle()) ? $_1 : ((!empty($ctx_obj->atitle)) ? $ctx_obj->atitle : null);
+    $query['query.title'] = ($_1 = $ctx_obj->atitle) ? $_1 : ($ctx_obj->getBookTitle() ? $ctx_obj->getBookTitle() : null);
     $query['query.author'] = $ctx_obj->aulast;
 
     $crossrefResponse = $crossrefClient->get('/works', [
