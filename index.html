@@ -1,0 +1,209 @@
+<!doctype html>
+<!--[if lt IE 7]>   <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>     <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>     <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Gochiso: rushing around to provide full-text at point-of-need</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+    <link href="https://fonts.googleapis.com/css?family=Acme|Lato" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+      body {
+        padding-top: 50px;
+        padding-bottom: 20px;
+      }
+    </style>
+    <link rel="stylesheet" href="css/bootswatch-lumen.min.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+  </head>
+  <body class="theme-lumen">
+    <!--[if lt IE 8]>
+      <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <h1>Gochiso <small>rushing around to provide full-text at point-of-need</small></h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="jumbotron">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12 col-md-6">
+            <p>We think ILL forms should be smart enough to do the searching users don&#8217;t know how to or don&#8217;t want to do.</p>
+            <p><span class="highlight">Gochiso</span> helps with that.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-md-4">
+          <div class="row">
+            <div class="col-xs-12">
+              <nav class="hidden-print">
+                <ol class="list-unstyled lead">
+                  <li><a href="#installation-and-setup">Installation and setup</a></li>
+                  <li><a href="#configuration-options">Configuration options</a></li>
+                  <li><a href="#limitations">Limitations</a></li>
+                  <li><a href="#problems">Problems?</a></li>
+                  <li><a href="#whats-with-the-name">What&#8217;s with the name?</a></li>
+                  <li><a href="#thanks">Thanks!</a></li>
+                </ol>
+              </nav>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-8 hidden-xs hidden-sm hidden-print">
+          <div class="row">
+            <div class="col-xs-12">
+              <img class="img-responsive pull-right pink-elephant" src="img/merrill_example.png" alt="Merrill the Pink Elephant, the mascot of Gochiso">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="row">
+            <div class="col-xs-12">
+              <h2 id="installation-and-setup">Installation and setup</h2>
+              <p><span class="highlight">Gochiso</span> has two parts: a server-side component and a client-side component. The server-side component takes <a href="https://www.niso.org/publications/z3988-2004-r2010-openurl-framework-context-sensitive-services">OpenURL</a> data and looks it up using knowledge base APIs. The client-side component sends OpenURL data to the server and displays to the user the information it receives.</p>
+              <h3>Server-side component</h3>
+              <p>The server-side component requires <code>PHP 7</code> and <a href="https://getcomposer.org/">Composer</a>.</p>
+              <ol>
+                <li>
+                  <p>Get the <a href="https://github.com/apcshields/gochiso">code</a>.</p>
+                  <p><kbd>https://github.com/apcshields/gochiso.git</kbd></p>
+                </li>
+                <li>
+                  <p>Have Composer install dependencies.</p>
+                  <p><kbd>composer install</kbd></p>
+                </li>
+                <li><p>Copy the <code>includes/config_default.inc.php</code> file to <code>includes/config.inc.php</code>.</p></li>
+                <li>
+                  <p>Fill the <code>includes/config.inc.php</code> file with your institution&#8217;s information.</p>
+                  <p>Among other things, you&#8217;ll want to</p>
+                  <ol>
+                    <li><p>get a WSKey for OCLC&#8217;s <a href="https://www.oclc.org/developer/develop/web-services/worldcat-knowledge-base-api.en.html">WorldCat knowledge base API</a>, and</p></li>
+                    <li><p>get an API key for <a href="https://openaccessbutton.org/api">Open Access Button</a>.</p></li>
+                  </ol>
+                  <p>For a detailed look at configuration options, see <a href="#configuration-options">Configuration options</a>.</p>
+                </li>
+              </ol>
+              <h3>Client-side component</h3>
+              <p>The client-side component is highly customizeable&mdash;you can set it up any way you want. But the <span class="highlight">Gochiso</span> repository comes with <a href="https://github.com/apcshields/gochiso/blob/master/client.js">an example of the JavaScript</a> you could use to communicate with the server and display the results to the user.</p>
+              <p>We use <span class="highlight">Gochiso</span> in interlibary loan forms&mdash;it&#8217;s an easy place to get an OpenURL, and it&#8217;s a helpful place to show a user full-text links to resources.</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <h2 id="configuration-options">Configuration options</h2>
+              <p>Copy <code>includes/config_default.inc.php</code> to <code>includes/config.inc.php</code>. In this file, you should set the following configuration values:</p>
+              <p>The server endpoint(s) which use the configuration value are listed so that, if you aren&#8217;t using the relevant endpoint, you&#8217;ll know you can safely ignore the configuration value.</p>
+              <dl>
+                <dt>WSKEY</dt>
+                <dd>
+                  <p>Your WSKey for the <a href="https://www.oclc.org/developer/develop/web-services/worldcat-knowledge-base-api.en.html">WorldCat knowledge base API</a>. <span class="highlight">Gochiso</span> uses this to retrieve results from your WorldCat KB (if you have one).</p>
+                  <br>
+                  <p>Used by <code>discovery.php</code>.</p>
+                </dd>
+                <dt>INSTITUTION_ID</dt>
+                <dd>
+                  <p>Your institution&#8217;s OCLC registry id (numeric identifier, <em>not</em> three-letter institution symbol, e.g., '945', not 'IGC').</p>
+                  <br>
+                  <p>Used by <code>discovery.php</code>.</p>
+                </dd>
+                <dt>UNPAYWALL_EMAIL</dt>
+                <dd>
+                  <p>Unpaywall.org asks for an email as part of <a href="https://unpaywall.org/products/api">API calls</a>. <span class="highlight">Gochiso</span> doesn&#8217;t use this for anything else.</p>
+                  <br>
+                  <p>Used by <code>oadoi.php</code>.</p>
+                </dd>
+                <dt>OABUTTON_KEY</dt>
+                <dd>
+                  <p>Your key for the <a href="https://openaccessbutton.org/api">Open Access Button&#8217;s API</a>.</p>
+                  <br>
+                  <p>Used by <code>openaccessbutton.php</code>.</p>
+                </dd>
+                <dt>ALLOWED_DOMAINS</dt>
+                <dd>
+                  <p>This is an array of domains which are allowed to make <a href="https://developer.mozilla.org/en-US/docs/Glossary/XHR_(XMLHttpRequest)" title="XMLHttpRequest">XHR</a> requests to the server. (These requests are the way that a <span class="highlight">Gochiso</span> client communicates with the server.) Any domain on which a client is hosted should be listed here.</p>
+                  <br>
+                  <p>Used by all server files.</p>
+                </dd>
+              </dl>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <h2 id="limitations">Limitations</h2>
+              <ol>
+                <li>
+                  <p>Right now, <span class="highlight">Gochiso</span> can search:</p>
+                  <ul>
+                    <li><p>WorldCat knowledge base</p></li>
+                    <li><p>Unpaywall (formerly oaDOI)</p></li>
+                    <li><p>Open Access Button</p></li>
+                  </ul>
+                  <p>It&#8217;s not difficult, in <span class="highlight">Gochiso</span>&#8217;s current state, to write new providers, and probably we&#8217;ll write more as time goes on. If you want to contribute a new provider, open a pull request on the repository.</p>
+                </li>
+                <li><p><span class="highlight">Gochiso</span> uses CrossRef for resource metadata in Unpaywall (oaDOI) requests. (Unpaywall wants a DOI, which is usually not included in the OpenURLs used in ILL requests.) This means that responses from the <code>oadoi.php</code> endpoint generally have high-quality data. Other endpoints don&#8217;t currently provide this.</p></li>
+                <li>
+                  <p>The project out of which <span class="highlight">Gochiso</span> grew did two significant things which <span class="highlight">Gochiso</span> currently does not do:</p>
+                  <ul>
+                    <li><p>recorded transactions and their various results in analytics software (specifically <a href="https://matomo.org/">Matomo</a>), and</p></li>
+                    <li><p>notified the systems librarian via email when it found non-functioning links from the WorldCat knowledge base.</p></li>
+                  </ul>
+                </li>
+                <li><p>The sample client JavaScript file displays an element with results at the top of the page, if its requests successfully complete. Ideally, the client would tell the user it was searching and then indicate that it had found results at an easily noticed location on the page.</p></li>
+                <li><p>The sample client JavaScript file also only sends requests based on the OpenURL query string with which the page is loaded, regardless of information the patron enters or modifies after page load.</p></li>
+              </ol>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <h2 id="problems">Problems?</h2>
+              <p><a href="https://github.com/apcshields/gochiso/issues/new">File a ticket</a> on the GitHub repository.</p>
+              <p>If you&#8217;re a staff member at a <a href="https://www.palni.edu/" title="Private Academic Library Network of Indiana">PALNI</a> institution, you can email Andrew Shields (find my contact information on the <a href="https://community.palni.edu/">PALNI Community</a>).</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <h2 id="whats-with-the-name">What&#8217;s with the name?</h2>
+              <p>&#8216;Gochiso&#8217; is a transliterated Japanese word for a feast and is etymologically linked to the concept &#8216;to rush&#8217;. It represents the idea that a host rushes around to prepare a meal for their guests as an expression of sincerity and consideration. This is exactly the spirit in which librarians model good research practices for our patrons, and this project represents an attempt to rush around to bring our patrons the resources that they at the moment that they need them&mdash;regardless of how they&#8217;ve gotten to that point.</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <h2 id="thanks">Thanks!</h2>
+              <p>OCLC, Unpaywall, Open Access Button, and <del>hundreds</del> thousands of librarians have done the work to aggregate the data that <span class="highlight">Gochiso</span> uses and provide API access to it.</p>
+              <p>This page was built with <a href="https://html5boilerplate.com">HTML5 Boilerplate</a>, <a href="http://getbootstrap.com">Bootstrap</a>, and the Bootswatch <a href="http://bootswatch.com/3/lumen/">Lumen</a> theme.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <footer>
+        <div class="row">
+          <p class="col-sm-6">&copy; <a href="https://www.palni.edu" title="Private Academic Library Network of Indiana">PALNI</a> and Andrew Shields 2018</p>
+          <p class="col-sm-6 text-right"><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> <span class="hidden">This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.</span></p>
+        </div>
+      </footer>
+    </div> <!-- /container -->
+  </body>
+</html>
