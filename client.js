@@ -105,7 +105,7 @@ jQuery(function($) {
       }
 
       // Crude merging of the data...
-      var fulltext = _(results).flatMap('fulltext').uniqBy('url').value();
+      var fulltext = _(results).flatMap('fulltext').uniqBy('link').value();
 
       var data = { match: {} };
 
@@ -115,6 +115,8 @@ jQuery(function($) {
 
       data.match.fulltext = fulltext;
       // ... end crude merging.
+
+      console.log(fulltext);
 
       if (fulltext.length) {
         processDigitalAvailabilityResults(data);
